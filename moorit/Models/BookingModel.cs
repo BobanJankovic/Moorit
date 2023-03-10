@@ -12,9 +12,9 @@ namespace Moorit.Models
 
         public float Price { get; set; }
 
-        public string ApplicationUserId { get; set; }
+        public string ApplicationUserModelId { get; set; }
 
-        public virtual ApplicationUser? User { get; set; }
+        public virtual ApplicationUserModel? User { get; set; }
 
         public int MooringId { get; set; }
 

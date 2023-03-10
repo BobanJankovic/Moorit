@@ -15,9 +15,11 @@ namespace Moorit.Data
 
         public Boolean IsOccupied { get; set; }
 
+        public float Latitude { get; set; }
+        
+        public float Longitude { get; set; }
+
         public float Price { get; set; }
-
-
 
         public int LocationId { get; set; }
 

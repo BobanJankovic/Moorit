@@ -12,8 +12,8 @@ using Moorit.Data;
 namespace Moorit.Migrations
 {
     [DbContext(typeof(MooritContext))]
-    [Migration("20230304163943_Initial")]
-    partial class Initial
+    [Migration("20230308192346_first-initial")]
+    partial class firstinitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,10 @@ namespace Moorit.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserModelId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -178,14 +182,11 @@ namespace Moorit.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("MooringId");
+                    b.HasIndex("ApplicationUserModelId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("MooringId");
 
                     b.ToTable("Bookings");
                 });
@@ -217,11 +218,17 @@ namespace Moorit.Migrations
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("bit");
 
+                    b.Property<float>("Latitude")
+                        .HasColumnType("real");
+
                     b.Property<float>("Length")
                         .HasColumnType("real");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -239,56 +246,7 @@ namespace Moorit.Migrations
                     b.ToTable("Moorings");
                 });
 
-            modelBuilder.Entity("Moorit.Data.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Moorit.Data.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Moorit.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Moorit.Models.ApplicationUserModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -370,7 +328,7 @@ namespace Moorit.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Moorit.Models.ApplicationUser", null)
+                    b.HasOne("Moorit.Models.ApplicationUserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -379,7 +337,7 @@ namespace Moorit.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Moorit.Models.ApplicationUser", null)
+                    b.HasOne("Moorit.Models.ApplicationUserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -394,7 +352,7 @@ namespace Moorit.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Moorit.Models.ApplicationUser", null)
+                    b.HasOne("Moorit.Models.ApplicationUserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -403,7 +361,7 @@ namespace Moorit.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Moorit.Models.ApplicationUser", null)
+                    b.HasOne("Moorit.Models.ApplicationUserModel", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,15 +370,15 @@ namespace Moorit.Migrations
 
             modelBuilder.Entity("Moorit.Data.Booking", b =>
                 {
-                    b.HasOne("Moorit.Data.Mooring", "Mooring")
+                    b.HasOne("Moorit.Models.ApplicationUserModel", "User")
                         .WithMany()
-                        .HasForeignKey("MooringId")
+                        .HasForeignKey("ApplicationUserModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Moorit.Data.User", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Moorit.Data.Mooring", "Mooring")
+                        .WithMany()
+                        .HasForeignKey("MooringId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -440,25 +398,9 @@ namespace Moorit.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("Moorit.Data.User", b =>
-                {
-                    b.HasOne("Moorit.Data.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("Moorit.Data.Location", b =>
                 {
                     b.Navigation("Moorings");
-                });
-
-            modelBuilder.Entity("Moorit.Data.User", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

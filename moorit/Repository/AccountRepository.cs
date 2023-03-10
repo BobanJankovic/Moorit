@@ -9,11 +9,11 @@ namespace Moorit.Repository
 {
     public class AccountRepository: IAccountRepository
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUserModel> _userManager;
+        private readonly SignInManager<ApplicationUserModel> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        public AccountRepository(UserManager<ApplicationUserModel> userManager, SignInManager<ApplicationUserModel> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -22,7 +22,7 @@ namespace Moorit.Repository
 
         public async Task<IdentityResult> SignUpAsync(SignUpModel signUpModel)
         {
-            var user = new ApplicationUser()
+            var user = new ApplicationUserModel()
             {
                 FirstName = signUpModel.FirstName,
                 LastName = signUpModel.LastName,

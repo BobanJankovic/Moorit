@@ -13,11 +13,11 @@ namespace Moorit.Controllers
        public readonly IAccountRepository _accountRepository;
         private readonly RoleManager<IdentityRole> _roleManager;
         private ILogger<AccountController> _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUserModel> _userManager;
 
         public AccountController(
             IAccountRepository accountRepository,
-            UserManager<ApplicationUser> userManager,
+            UserManager<ApplicationUserModel> userManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<AccountController> logger
             )

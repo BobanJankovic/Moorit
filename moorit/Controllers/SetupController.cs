@@ -11,12 +11,12 @@ namespace Moorit.Controllers
     public class SetupController : ControllerBase
     {
         private readonly MooritContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUserModel> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private ILogger<SetupController> _logger;
         public SetupController(
             MooritContext context, 
-            UserManager<ApplicationUser> userManager, 
+            UserManager<ApplicationUserModel> userManager, 
             RoleManager<IdentityRole> roleManager, 
             ILogger<SetupController> logger)
         {

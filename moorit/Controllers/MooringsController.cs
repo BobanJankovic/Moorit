@@ -41,5 +41,13 @@ namespace Moorit.Controllers
             var id = await _mooringRepository.AddMooringAsync(mooringModel);
             return CreatedAtAction(nameof(GetMooringById), new { id = id, controller = "moorings" }, id);
         }
+
+        [HttpDelete("deleteMooringAsync/{id}")]
+        public async Task<IActionResult> DeleteMooringAsync(int Id)
+        {
+
+            await _mooringRepository.DeleteMooringAsync(Id);
+            return Ok(true);
+        }
     }
 }

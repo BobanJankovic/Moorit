@@ -87,3 +87,8 @@ C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Microsoft.Extensions.I
 C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Comp\source\repos\moorit\moorit\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

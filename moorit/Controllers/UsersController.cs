@@ -1,5 +1,7 @@
 ﻿using Moorit.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Moorit.Models;
 
 namespace Moorit.Controllers
 {
@@ -7,24 +9,28 @@ namespace Moorit.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        public UsersController(IUserRepository bookingRepository)
+      
+        private readonly UserManager<ApplicationUserModel> _userManager;
+
+        public UsersController( UserManager<ApplicationUserModel> userManager)
         {
-            _userRepository = bookingRepository;
+         
+            _userManager = userManager;
 
         }
 
         [HttpGet("")]
         public async Task<IActionResult> GetAllUsers()
         {
-            var records = await _userRepository.GetAllUsersAsync();
+            var records = await _userManager.GetUsersInRoleAsync("User");
             return Ok(records);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] int id)
         {
-            var records = await _userRepository.GetUserByIdAsync(id);
+            
+            var records = await _userManager.FindByIdAsync(id.ToString());
             if (records == null)
             {
                 return NotFound();

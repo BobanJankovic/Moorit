@@ -7,5 +7,7 @@ namespace Moorit.Repository
         Task<List<MooringModel>> GetAllMooringsAsync();
         Task<MooringModel> GetMooringByIdAsync(int mooringId);
         Task<int> AddMooringAsync(MooringModel mooringModel);
+
+        Task DeleteMooringAsync(int Id);
     }
 }

@@ -86,6 +86,17 @@ namespace Moorit.Repository
             await _context.SaveChangesAsync();
             return location.Id;
         }
+
+        public async Task DeleteLocationAsync(int Id)
+        {
+            var location = new Location()
+            {
+                Id = Id
+            };
+            _context.Locations.Remove(location);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
 

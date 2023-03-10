@@ -51,7 +51,7 @@ namespace Moorit
             //    c.IncludeXmlComments(xpath);
             //});
 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<MooritContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUserModel, IdentityRole>().AddEntityFrameworkStores<MooritContext>().AddDefaultTokenProviders();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddMvc();
@@ -80,14 +80,14 @@ namespace Moorit
                     };
                 });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddTransient<IBookingRepository, BookingRepository>();
             services.AddTransient<IMooringRepository, MooringRepository>();
             services.AddTransient<ILocationRepository, LocationRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
+            //services.AddTransient<IUserRepository, UserRepository>();
+            //services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
-
+            services.AddAutoMapper(typeof(Startup));
 
         }
 

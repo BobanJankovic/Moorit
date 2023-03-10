@@ -11,38 +11,38 @@ namespace Moorit.Repository
         {
             _context = context;
         }
-        public async Task<List<UserModel>> GetAllUsersAsync()
-        {
-            var records = await _context.Users.Select(x => new UserModel()
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Email = x.Email,
-                Phone = x.Phone
+        //public async Task<List<UserModel>> GetAllUsersAsync()
+        //{
+        //    var records = await _context.Users.Select(x => new UserModel()
+        //    {
+        //        Id = x.Id,
+        //        FirstName = x.FirstName,
+        //        LastName = x.LastName,
+        //        Email = x.Email,
+        //        Phone = x.Phone
 
-            }).ToListAsync();
+        //    }).ToListAsync();
 
-            return records;
-        }
+        //    return records;
+        //}
 
-        public async Task<UserModel> GetUserByIdAsync(int userId)
-        {
-            var records = await _context.Users.Where(x => x.Id == userId).Select(x => new UserModel()
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
+        //public async Task<UserModel> GetUserByIdAsync(int userId)
+        //{
+        //    var records = await _context.Users.Where(x => x.Id == userId).Select(x => new UserModel()
+        //    {
+        //        Id = x.Id,
+        //        FirstName = x.FirstName,
         
-            }).FirstOrDefaultAsync();
+        //    }).FirstOrDefaultAsync();
 
 
-            if (records == null)
-            {
-                throw new Exception();
-            }
+        //    if (records == null)
+        //    {
+        //        throw new Exception();
+        //    }
 
-            return records;
-        }
+        //    return records;
+        //}
     }
 }
 

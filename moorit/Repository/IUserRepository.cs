@@ -4,7 +4,7 @@ namespace Moorit.Repository
 {
     public interface IUserRepository
     {
-        Task<List<UserModel>> GetAllUsersAsync();
-        Task<UserModel> GetUserByIdAsync(int userId);
+        //Task<List<UserModel>> GetAllUsersAsync();
+        //Task<UserModel> GetUserByIdAsync(int userId);
     }
 }

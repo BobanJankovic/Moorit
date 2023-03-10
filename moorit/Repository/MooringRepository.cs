@@ -43,17 +43,28 @@ namespace Moorit.Repository
         {
 
         var mooring = new Mooring()
-            {
+        {
             Name = mooringModel.Name,
             Length = mooringModel.Length,
             Width = mooringModel.Width,
             IsOccupied = mooringModel.IsOccupied,
             Price = mooringModel.Price,
             LocationId=mooringModel.LocationId,
-            };
+        };
             _context.Moorings.Add(mooring);
             await _context.SaveChangesAsync();
             return mooring.Id;
+        }
+
+        public async Task DeleteMooringAsync(int Id)
+        {
+            var mooring = new Mooring()
+            {
+                Id = Id
+            };
+            _context.Moorings.Remove(mooring);
+            await _context.SaveChangesAsync();
+
         }
     }
 }
