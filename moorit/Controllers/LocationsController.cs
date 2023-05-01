@@ -42,6 +42,14 @@ namespace Moorit.Controllers
             return CreatedAtAction(nameof(GetLocationById), new { id = id, controller = "locations" }, id);
         }
 
+        [HttpPut("putUpdateLocationAsync/{locationId}")]
+        public async Task<IActionResult> PutUpdateLocationAsync([FromRoute] int locationId, [FromBody] LocationModel locationModel)
+        {
+            await _locationRepository.PutUpdateLocationAsync(locationId, locationModel);
+
+            return Ok(true);
+        }
+
 
         [HttpDelete("deleteLocationAsync/{id}")]
         public async Task<IActionResult> DeleteLocationAsync(int Id)

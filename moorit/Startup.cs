@@ -28,12 +28,12 @@ namespace Moorit
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            // OVO SAM NAMERNO SKLONIO PROVERI TREBA LI ZALOKAL MOZE IZAZVATI PROBLEME
-            //services.AddCors(o =>
-            //{
-            //    o.AddPolicy("CorsPolicy",
-            //        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            //});
+            // bez ovog CORS ne radi
+            services.AddCors(o =>
+            {
+                o.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
             //services.AddAutoMapper(typeof(Maps));
 

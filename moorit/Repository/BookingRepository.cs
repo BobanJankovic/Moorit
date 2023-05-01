@@ -57,47 +57,47 @@ namespace Moorit.Repository
 
         public async Task<BookingModel> GetBookingByIdAsync(int bookingId)
         {
-            //var records = await _context.Bookings.Where(x => x.Id == bookingId).Select(x => new BookingModel()
-            //{
-            //    Id = x.Id,
-            //    StartDate = x.StartDate,
-            //    EndDate = x.EndDate,
-            //    Price = x.Price,
-            //    ApplicationUserModelId = x.ApplicationUserModelId,
-            //    User = x.User,
-            //    MooringId = x.MooringId,
-            //    Mooring = new MooringModel()
-            //    {
-            //        Id = x.Mooring.Id,
-            //        Name = x.Mooring.Name,
-            //        Length = x.Mooring.Length,
-            //        Width = x.Mooring.Width,
-            //        IsOccupied = x.Mooring.IsOccupied,
-            //        Price = x.Mooring.Price,
-            //        LocationId = x.Mooring.LocationId,
-            //        Location = new LocationModel()
-            //        {
-            //            Id = x.Mooring.Location.Id,
-            //            Name = x.Mooring.Location.Name,
-            //            Moorings = x.Mooring.Location.Moorings.Select(m => new MooringModel
-            //            {
-            //                Id = m.Id,
-            //                Name = m.Name,
+            var records = await _context.Bookings.Where(x => x.Id == bookingId).Select(x => new BookingModel()
+            {
+                Id = x.Id,
+                StartDate = x.StartDate,
+                EndDate = x.EndDate,
+                Price = x.Price,
+                ApplicationUserModelId = x.ApplicationUserModelId,
+                User = x.User,
+                MooringId = x.MooringId,
+                Mooring = new MooringModel()
+                {
+                    Id = x.Mooring.Id,
+                    Name = x.Mooring.Name,
+                    Length = x.Mooring.Length,
+                    Width = x.Mooring.Width,
+                    IsOccupied = x.Mooring.IsOccupied,
+                    Price = x.Mooring.Price,
+                    LocationId = x.Mooring.LocationId,
+                    Location = new LocationModel()
+                    {
+                        Id = x.Mooring.Location.Id,
+                        Name = x.Mooring.Location.Name,
+                        Moorings = x.Mooring.Location.Moorings.Select(m => new MooringModel
+                        {
+                            Id = m.Id,
+                            Name = m.Name,
 
-            //            }).ToList()
-            //        }
-            //    }
-            //}).FirstOrDefaultAsync();
+                        }).ToList()
+                    }
+                }
+            }).FirstOrDefaultAsync();
 
-            //if (records == null)
-            //{
-            //    throw new Exception();
-            //}
+            if (records == null)
+            {
+                throw new Exception();
+            }
 
 
-            //return records;
-            var booking = await _context.Bookings.FindAsync(bookingId);
-            return _mapper.Map<BookingModel>(booking);
+            return records;
+            //var booking = await _context.Bookings.FindAsync(bookingId);
+            //return _mapper.Map<BookingModel>(booking);
         }
 
         public async Task<int> AddBookingAsync(BookingModel bookingModel)
@@ -163,7 +163,7 @@ namespace Moorit.Repository
 
         public async Task<List<BookingModel>> GetBookingsByMooringIdAsync(int id)
         {
-            var records = await _context.Bookings.Where(x => x.MooringId == id).Select(x => new BookingModel()
+            var records = await _context.Bookings.Where(x => x.Mooring.Id == id).Select(x => new BookingModel()
             {
                 Id = x.Id,
                 StartDate = x.StartDate,

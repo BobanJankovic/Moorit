@@ -12,8 +12,8 @@ using Moorit.Data;
 namespace Moorit.Migrations
 {
     [DbContext(typeof(MooritContext))]
-    [Migration("20230308192346_first-initial")]
-    partial class firstinitial
+    [Migration("20230318222415_added-bookings-to-moorings")]
+    partial class addedbookingstomoorings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -199,6 +199,12 @@ namespace Moorit.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<float?>("Latitude")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("Longitude")
+                        .HasColumnType("real");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -377,7 +383,7 @@ namespace Moorit.Migrations
                         .IsRequired();
 
                     b.HasOne("Moorit.Data.Mooring", "Mooring")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("MooringId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -401,6 +407,11 @@ namespace Moorit.Migrations
             modelBuilder.Entity("Moorit.Data.Location", b =>
                 {
                     b.Navigation("Moorings");
+                });
+
+            modelBuilder.Entity("Moorit.Data.Mooring", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

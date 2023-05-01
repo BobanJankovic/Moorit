@@ -17,10 +17,10 @@ namespace Moorit.Controllers
 
         }
 
-        [HttpGet("")]
-        public async Task<IActionResult> GetAllMoorings()
+        [HttpGet]
+        public async Task<IActionResult> GetAllMoorings([FromQuery] string startDate, string endDate)
         {
-            var records = await _mooringRepository.GetAllMooringsAsync();
+            var records = await _mooringRepository.GetAllMooringsAsync(startDate,endDate);
             return Ok(records);
         }
 

@@ -21,5 +21,17 @@
         public int LocationId { get; set; }
 
         public virtual LocationModel? Location { get; set; }
+
+        public virtual ICollection<BookingModel>? Bookings { get; set; }
+
+        public enum MooringStatus
+        {
+            Available,
+            ExpiresSoon,
+            Occupied
+        }
+
+
+        public MooringStatus Status { get; set; }
     }
 }

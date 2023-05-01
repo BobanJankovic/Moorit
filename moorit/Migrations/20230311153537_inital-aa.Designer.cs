@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moorit.Data;
 
@@ -11,9 +12,11 @@ using Moorit.Data;
 namespace Moorit.Migrations
 {
     [DbContext(typeof(MooritContext))]
-    partial class MooritContextModelSnapshot : ModelSnapshot
+    [Migration("20230311153537_inital-aa")]
+    partial class initalaa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -239,9 +242,6 @@ namespace Moorit.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<float>("Width")
                         .HasColumnType("real");
 
@@ -383,7 +383,7 @@ namespace Moorit.Migrations
                         .IsRequired();
 
                     b.HasOne("Moorit.Data.Mooring", "Mooring")
-                        .WithMany("Bookings")
+                        .WithMany()
                         .HasForeignKey("MooringId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -407,11 +407,6 @@ namespace Moorit.Migrations
             modelBuilder.Entity("Moorit.Data.Location", b =>
                 {
                     b.Navigation("Moorings");
-                });
-
-            modelBuilder.Entity("Moorit.Data.Mooring", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

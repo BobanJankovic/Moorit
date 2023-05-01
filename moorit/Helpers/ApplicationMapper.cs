@@ -11,7 +11,7 @@ namespace Moorit.Helpers
         {
             CreateMap<Booking, BookingModel>()
                 .ForMember(dest => dest.Mooring, opt => opt.MapFrom(src => src.Mooring))
-                .ForMember(dest => dest.ApplicationUserModelId, opt => opt.MapFrom(src => src.ApplicationUserModelId));
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User));
             CreateMap<Location, LocationModel>();
             CreateMap<Mooring, MooringModel>();
         }

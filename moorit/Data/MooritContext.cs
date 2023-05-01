@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Moorit.Infrastructure;
 using Moorit.Models;
 
 namespace Moorit.Data
@@ -15,7 +16,20 @@ namespace Moorit.Data
         public MooritContext(DbContextOptions<MooritContext> options)
             : base(options)
         {
+           
 
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+
+        //    // Add custom model configuration logic here
+
+        //    // Call the Seed method from the DataSeedClass after the model has been built
+        //    new DataSeedClass(modelBuilder).Seed();
+        //}
+
+
     }
 }

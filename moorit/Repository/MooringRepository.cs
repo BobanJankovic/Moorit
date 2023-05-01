@@ -2,6 +2,7 @@
 using Moorit.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Moorit.Repository
 {
     public class MooringRepository : IMooringRepository
@@ -11,13 +12,74 @@ namespace Moorit.Repository
         {
             _context = context;
         }
-        public async Task<List<MooringModel>> GetAllMooringsAsync()
+
+
+        static public MooringModel.MooringStatus GetStatus(
+            DateTime sf, 
+            DateTime ef, 
+            IEnumerable<BookingModel> Bookings
+       )
         {
-            var records = await _context.Moorings.Select(x => new MooringModel()
+
+            foreach (var booking in Bookings)
+            {
+                // sf and ef stands for filterStardDate and filterEndDate
+                // sb and eb stands for bookingStardDate and bookingEndDate
+
+                var sb = booking.StartDate;
+                var eb = booking.EndDate;
+
+                if ((sf < sb && eb<ef) || (sb<sf&&eb<ef&&sf<eb) || (sf < sb && ef < eb&&sb<ef))
+                {
+                    return MooringModel.MooringStatus.ExpiresSoon;
+                }
+                else if (sb < sf && ef < eb)
+                {
+                    return MooringModel.MooringStatus.Occupied;
+                }
+                else if (sb == sf && ef < eb)
+                {
+                    return MooringModel.MooringStatus.Occupied;
+                }
+            }
+
+            return MooringModel.MooringStatus.Available;
+        }
+
+        public async Task<List<MooringModel>> GetAllMooringsAsync(string startDate, string endDate)
+        {
+            Console.WriteLine(startDate, endDate);
+            // Parse the start and end date strings to DateTime objects
+            DateTime start = DateTime.Parse(startDate);
+            DateTime end = DateTime.Parse(endDate);
+
+
+            var records = await _context.Moorings.Select(x =>  new MooringModel()
             {
                 Id = x.Id,
                 Name = x.Name,
-             
+                Latitude = x.Latitude,
+                Longitude=x.Longitude,
+                Price = x.Price,
+                Status = GetStatus(start,end, x.Bookings.Select(m => new BookingModel
+                {
+                    Id = m.Id,
+                    StartDate = m.StartDate,
+                    EndDate = m.EndDate,
+                    Price = m.Price,
+                    ApplicationUserModelId = m.ApplicationUserModelId
+                    // map other properties as needed
+                }).ToList()),
+                Bookings = x.Bookings.Select(m => new BookingModel
+                {
+                    Id = m.Id,
+                    StartDate=m.StartDate,
+                    EndDate=m.EndDate,
+                    Price=m.Price,
+                    ApplicationUserModelId=m.ApplicationUserModelId
+                    // map other properties as needed
+                }).ToList()
+
             }).ToListAsync();
 
             return records;
@@ -50,6 +112,8 @@ namespace Moorit.Repository
             IsOccupied = mooringModel.IsOccupied,
             Price = mooringModel.Price,
             LocationId=mooringModel.LocationId,
+            Latitude = mooringModel.Latitude,
+            Longitude = mooringModel.Longitude,
         };
             _context.Moorings.Add(mooring);
             await _context.SaveChangesAsync();
@@ -69,4 +133,3 @@ namespace Moorit.Repository
     }
 }
 
-                

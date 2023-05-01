@@ -2,6 +2,14 @@
 
 namespace Moorit.Data
 {
+
+    public enum Status
+    {
+        Available,
+        ExpiresSoon,
+        Occupied
+    }
+
     [Table("Moorings")]
     public class Mooring
     {
@@ -24,5 +32,18 @@ namespace Moorit.Data
         public int LocationId { get; set; }
 
         public virtual Location? Location { get; set; }
+
+        public virtual ICollection<Booking>? Bookings { get; set; }
+
+        public enum MooringStatus
+        {
+            Available,
+            ExpiresSoon,
+            Occupied
+        }
+
+      
+        public MooringStatus Status { get; set; }
+
     }
 }

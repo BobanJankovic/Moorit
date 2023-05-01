@@ -17,6 +17,8 @@ namespace Moorit.Repository
             {
                 Id = x.Id,
                 Name = x.Name,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
                 Moorings = x.Moorings.Select(m => new MooringModel
                 {
                     Id = m.Id,
@@ -54,6 +56,8 @@ namespace Moorit.Repository
             {
                 Id = x.Id,
                 Name = x.Name,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
                 Moorings = x.Moorings.Select(m => new MooringModel
                 {
                     Id = m.Id,
@@ -81,10 +85,32 @@ namespace Moorit.Repository
             var location = new Location()
             {
                 Name = locationModel.Name,
+                Latitude = locationModel.Latitude,
+                Longitude = locationModel.Longitude,
             };
             _context.Locations.Add(location);
             await _context.SaveChangesAsync();
             return location.Id;
+        }
+
+        public async Task PutUpdateLocationAsync(int locationId, LocationModel locationModel)
+        {
+            //var book = await _context.Bookings.FindAsync(bookingId);
+
+            var location = new Location()
+            {
+                Id = locationId,
+                Name = locationModel.Name,
+                Latitude = locationModel.Latitude,
+                Longitude = locationModel.Longitude
+            };
+
+            //_context.Bookings.Add(booking);
+            //await _context.SaveChangesAsync();
+            //return booking.Id;
+
+            _context.Locations.Update(location);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteLocationAsync(int Id)

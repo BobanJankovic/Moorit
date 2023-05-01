@@ -8,6 +8,8 @@ namespace Moorit.Repository
         Task<LocationModel> GetLocationByIdAsync(int locationId);
         Task<int> AddLocationAsync(LocationModel locationModel);
 
+        Task PutUpdateLocationAsync(int locationId, LocationModel locationModel);
+
         Task DeleteLocationAsync(int Id);
     }
 }

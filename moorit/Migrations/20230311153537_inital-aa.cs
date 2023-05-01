@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Moorit.Migrations
 {
     /// <inheritdoc />
-    public partial class firstinitial : Migration
+    public partial class initalaa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,9 @@ namespace Moorit.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Latitude = table.Column<float>(type: "real", nullable: true),
+                    Longitude = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {

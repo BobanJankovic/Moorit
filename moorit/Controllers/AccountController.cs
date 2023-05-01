@@ -80,7 +80,27 @@ namespace Moorit.Controllers
                 return Unauthorized();
             }
 
-            return Ok(result);
+            var user = await _userManager.FindByEmailAsync(signInModel.Email);
+            if (user == null)
+            {
+                _logger.LogInformation("User doesn't exist");
+                return BadRequest(new { error = "User doesn't exist" });
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            var isAdmin = roles.Contains("Admin");
+
+            var response = new
+            {
+                Id =user.Id,
+                username=user.UserName,
+                password=user.PasswordHash,
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                token=result,
+                isAdmin= isAdmin
+            };
+
+            return Ok(response);
         }
 
     }
